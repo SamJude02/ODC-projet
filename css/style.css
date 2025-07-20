@@ -1,0 +1,1951 @@
+/*==========================================================================*/
+/*==         code general du site                     = ====*/
+/*===========================================================================*/
+
+/*-------- variable  de couleurs et polices  (:root)---------------*/
+/* on définit toutes les couleurs et polices ici pour réutiliser facilement*/
+
+:root{
+    /* couleur de la marque */
+     --color-primary:#068740; /*vert principal*/
+     --color-secondary:#035E42; /*vert foncé (titre, footer*/
+     --color-accent : #FEBA00; /*jane or (bouton, surlignage)*/
+     
+     /* couleurs neutres */
+      --color-text:#333;  /* coulleur Texte principal*/
+      --color-text-light:#555;/*text un plus clair */
+      --color-white:#fff; /*couleur blanche*/
+      --color-light-gray: #F9FBF9; /*fond de section très clair */
+      --color-border :#e9e9e9; /*couleur des bordures subtiles*/
+      
+      /* Polices d'écritures */
+      --font-headings : 'lora', 'sans-sérif' ;/*  police pour les titres */
+      --font-body : 'Poppins', 'sans-serif'; /* police pour le texte principal  */
+}
+
+
+
+
+/* ---2 Réinitialisation Global du site (Reset)-- */
+/* Applique une base saine  */
+*,
+*::before,
+*::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth; /*permet le defilement fluide des liens s'ancrage */
+    font-size: 100%;/*base  pour laes tailles de polices responsives (rem) */
+}
+/* -- 3 Styles du corps de la page (Body) */
+/* defint les styles par defaut  */
+body{
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-text);
+    background-color: var(--color-white);
+    line-height: 1.6;/*Améliore la visibilité du texte*/
+}
+
+/* --4 typographie de base  */
+h1,h2,h3,h4,h5,h6 {
+    font-family: var(--font-headings);
+    color: var(--color-secondary);
+    font-weight:700;
+    line-height: 1.2; /* l'espacement entre les lignes et les titres */
+}
+
+a{
+    color: var(--color-primary);
+    text-decoration: none;/*pa de soulignement par défaut */
+    transition: color 0.3 ease; /* transition de douce pour les changements de couleurs */
+
+}
+
+a:hover{
+    color: var(--color-accent); /* couleur des liens au survol*/
+}
+
+img{
+    max-width: 100%;/*images responsives*/
+   display: block;/* evite les espacements indésirable*/
+
+}
+
+/* ---5 Conteneur utiltaires (.container) --*/
+/* une classe qu'on le réutilise partout pour center le contenu */
+
+.container {
+    max-width: 1200px; /*largeur maximal pour les écrans larges*/
+    margin: 0 auto ;/*centre le conteur*/
+    width: 90%;  /* largeurs par défaut pour les écrans plus pétits */
+    padding: 20px; /*espace intérieur*/
+}
+
+
+/* ======================= style du header ====================== */
+/* -------------- structure global du header--------------------- */
+
+.main-header{
+    background-color: var(--color-white);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);/*legere ombre pour le header*/
+    padding: 1rem 0 ;/* espacement verticale*/
+    border-bottom: 1px solid var(--color-border);
+    position: sticky; /*reste en haut lors du défilement */
+    top: 0; /* positionne en haut */
+    z-index: 1000; /* assure que le header est au dessus des autres */
+    
+}
+.header-container{
+    max-width: 1200px;/* largeur maximal  pour le conteneur du header
+    margin: 0 auto; /*centre le conteneur*/
+    display: flex;
+    padding: 0 2rem ;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* ----Logo-------- */
+.header-logo img{
+    height: 80px;
+    width: auto;
+    display: block;/*evite les espacement indésirable entre le lofo */ 
+
+}
+
+.main-nav ul {
+    list-style: none;/* supprime les puces de la liste */
+    display: flex; /* utilise les flexbox pour l'alignement*/
+    margin: 0;
+    padding: 0;
+    gap: 2.5rem;/*espace entre les éléments */
+}
+
+.main-nav a{
+    font-weight: 500; /*poids de la police pour les liens du menu*/
+    font-size: 1rem;
+    padding-bottom: 5px;
+    position: relative; /*nécessaire pour le surlignment*/
+
+}
+/* effet du survole : une barre apparait sous le lien */
+
+.main-nav a::after,
+.main-nav a.active::after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #FEBA00; /* La barre sera de couleur accent (jaune) */
+    transition: width 0.3s ease;
+
+
+}
+.main-nav a:hover::after,
+.main-nav a.active::after {
+    width: 100%; /* La barre prend toute la largeur au survol ou si le lien est actif */
+}
+
+.main-nav a:hover, .main-nav a.active {
+    color: #068740; /* Le texte devient vert clair pour correspondre */
+}
+
+
+/* --- Bouton d'Action --- */
+.header-actions .btn {
+    padding: 10px 24px;
+    border-radius: 50px; /* Bouton en forme de pilule */
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.header-actions .btn-primary {
+    background-color: var(--color-accent); /* Fond jaune/or */
+    color: var(--color-secondary); /* Texte en vert foncé */
+}
+
+.header-actions .btn-primary:hover {
+    background-color: var(--color-secondary); /* Jaune un peu plus foncé au survol */
+    color: var(--color-white);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+/* --- Bouton pour le Menu Mobile --- */
+.mobile-nav-toggle {
+    display: none; /* Caché par défaut sur les grands écrans */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* ======================= RESPONSIVE POUR MOBILE ======================= */
+@media (max-width: 992px) { /* Point de rupture pour tablettes et mobiles */
+    .main-nav, .header-actions {
+        display: none; /* On cache la navigation et le bouton d'action */
+    }
+
+    .mobile-nav-toggle {
+        display: flex; /* On affiche le bouton "burger" */
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .mobile-nav-toggle span  {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: var(--color-secondary); /* Couleur des barres du burger */
+
+    }
+
+}
+
+/* ======================================style & animation du mobile =====================================*/
+/* ======================= STYLE & Animation du menu mobile ======================= */
+
+
+
+
+/* ======================= STYLE & Animation du menu mobile ======================= */
+@media (max-width: 992px) {
+    .main-nav{
+        position: fixed; /* Fixe le menu mobile en haut */
+        top: 0;
+        right: -100%; /* Hors de l'écran par défaut */
+        width: 70%; /* Largeur du menu mobile */
+        max-width: 350px; /* Largeur maximale */
+        height: 70vh; /* Prend toute la hauteur de l'écran */
+        padding-top: 6rem; /* Espace en haut pour le logo */
+        background-color: var(--color-white); /* Fond blanc pour le menu mobile */
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1); /* Ombre pour le menu mobile */
+        transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1); /* Animation slide */
+        display: block; /* Affiche le menu mobile */
+    }
+
+    .main-nav ul {
+        flex-direction: column; /* Colonne pour le menu mobile */
+        gap: 1.5rem; /* Espace entre les éléments du menu */
+        align-items: center; /* Centre les éléments horizontalement */
+    } 
+    .main-nav a {
+        color: var(--color-secondary); /* Couleur des liens du menu mobile */
+        font-size: 1.2rem; /* Taille de police plus grande pour le menu mobile */
+    }
+
+    /* --- État "ouvert" du menu --- */
+    .main-nav.nav-open {
+        right: 0; /* Le menu glisse dans l'écran */
+    }
+
+    /* Boutton Burger */
+    .mobile-nav-toggle {
+        display: flex;
+        flex-direction: column;
+        gap: 5px; /* Espace entre les barres du burger */
+        z-index: 1001; /* Assure que le bouton est au-dessus du menu */
+    }
+    .mobile-nav-toggle span {
+        display: block;
+        width: 25px; /* Largeur des barres du burger */
+        height: 3px; /* Hauteur des barres du burger */
+        background-color: var(--color-secondary); /* Couleur des barres du burger */
+        transition: background-color 0.3s ease; /* Transition douce pour la couleur */
+        border-radius: 2px; /* Coins arrondis pour les barres du burger */
+    }
+
+    /* --- Animation du bouton burger en croix (X) --- */
+    .mobile-nav-toggle.is-active span:nth-of-type(1){
+        transform:rotate(45deg) translate(5px 5px)
+    }
+    .mobile-nav-toggle.is-active span:nth-of-type(2){
+        opacity: 0;
+    }
+    .mobile-nav-toggle.is-active span:nth-of-type(3){
+        transform:rotate(-45deg) translate(7px -7px)
+    }
+
+    /* --- Bloque le scroll de la page --- */
+    body.no-scroll {
+        overflow: hidden;
+    }
+}
+
+
+
+
+
+/* =========================== style de la section hero =========================== */
+
+
+
+.hero{
+    background: linear-gradient(to right, var(--color-primary), 
+    var(--color-secondary)); /* degrade de vert*/
+    color: var(--color-white); /* texte blanc pour contraster avec le fond */ 
+    padding: 30px; /* espacement vertical */ 
+    overflow: hidden; /* evite les debordements */ 
+}
+
+.hero-container{
+    display: flex; /* utiliser flexbox pour l'alignement*/
+    align-items: center; /* aligne les elements verticalment*/
+    justify-content: space-between; /* espace,entre les elments*/
+    max-width: 1200px;  /* largeur maximal pour le conteneur */
+    margin: 0 auto; /* centre le conteneur*/
+    padding: 0 1.5rem; /* espacement horizontal*/ 
+    
+    
+}
+
+
+/* colone gauche: contenu */
+.hero-content{
+    flex: 1; /* prend tout l'espasce disponible */
+    max-width: 600px; /* limite la largeur du contenu*/
+    
+} 
+
+.hero-title {
+    font-size: 2.5rem; /* taille de police pour le titre principal */
+    font-weight: 700; /* gras pour le titre */
+    margin-bottom: 1rem; /* espacement en bas du titre*/ 
+    color: var(--color-white); /*  couleur blanche pour le titre */
+    line-height: normal; /* normalise l'espacement entre les ligne */
+} 
+
+.hero-title .highlight {
+    color: var(--color-accent); /*  couleur jaune pour le texte en avant*/
+}
+
+.hero-description {
+    font-size: 1.1rem; /* taille pour la description */ 
+    margin-bottom: 1.5rem; /*  espacement en bas de la description */ 
+    max-width: 500px; /* limite la largeur de la description */
+}
+.hero-button{
+    display: inline-block; /* permet d'appliquer des styles de bloc */
+    background-color: var(--color-accent); /* fond jaune or */
+    padding: 14px 30px; /* espacement interne du bouton */
+    border-radius: 50px; /* bouton en forme de pilule */
+    font-weight: bold; /* texte en gras */
+    font-size: 1rem; /* taille de police pour le bouton */
+    transition: transform 0.3 ease, box-shadow 0.3 ease; /* transition douce pour les effets */
+
+}
+
+.hero-button:hover {
+    transform: translateY(-5px); /* Légère élévation au survol */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Ombre portée pour l'effet de profondeur */
+    color: var(--color-secondary);
+}
+
+/* --- colonne de droite : image --- */
+.right{
+    margin-left: 100px;
+}
+.hero-image{
+    flex: 1; /*  prend tout l'espace disponible */ 
+    text-align: center; /*  centre l'image */ 
+    
+    
+}
+
+.hero-image img {
+    max-width: 90%; /* Image responsive */
+    height: auto; /* Conserve les proportions de l'image */
+    filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.1)); /* Ombre portée pour l'image */
+    
+}
+
+
+/* ======================= ADAPTATION POUR MOBILES (Responsive) ======================= */
+
+@media (max-width: 768px) { /* Point de rupture pour les mobiles */
+    .hero-container {
+        flex-direction: column; /* Colonne pour les mobiles */
+        align-items: center; /* Centre les éléments horizontalement */
+    }
+
+    .hero-content {
+        text-align: center; /* Centre le texte pour les mobiles */
+        margin-bottom: 20px; /* Espacement en bas pour séparer du contenu suivant */
+    }
+
+    .hero-title {
+        font-size: 2rem; /* Taille de police réduite pour les mobiles */
+    }
+
+    .hero-description {
+        font-size: 1rem; /* Taille de police réduite pour la description */
+    }
+
+    .hero-image img {
+        max-width: 100%; /* Image prend toute la largeur disponible */
+    }
+}
+
+
+
+
+
+
+/* ======================SECTION VALEURS =========================================================== */
+
+.valeur-section{
+    background-color: var(--color-light-gray);
+    padding: 5rem 0;
+}
+.section-title{
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-title h2{
+    font-size: 2.5rem;
+    color: var(--color-secondary);
+    margin-bottom: 1rem ;
+}
+.section-title p {
+    font-size: 1.1rem;
+    color: var(--color-text-light);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- Grille pour aligner les cartes --- */
+.valeurs-grid{
+    display: grid; /* Utilise Grid Layout pour la disposition */
+    grid-template-columns: repeat(3, 1fr); /* Colonnes responsives */
+    gap: 2rem; /* Espace entre les cartes */
+}
+/* --- Style de chaque carte de valeur --- */
+.valeur-card {
+    background-color: var(--color-white); /* Fond blanc pur */
+    padding: 2.5rem 2rem; /* Espace intérieur */
+    border-radius: 12px; /* Coins arrondis modernes */
+    text-align: center;
+    border: 1px solid var(--color-border); /* Bordure très subtile */
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.04); /* Ombre douce et diffuse */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation fluide */
+}
+
+/* --- Effet au survol de la carte --- */
+.valeur-card:hover {
+    transform: translateY(-10px); /* La carte se soulève légèrement */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08); /* L'ombre devient plus prononcée */
+}
+
+/* --- Conteneur circulaire de l'icône --- */
+.valeur-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 1.5rem auto; /* Centre le cercle et espace en dessous */
+    background-color: #E6F3EC; /* Fond vert très clair */
+    border-radius: 50%; /* Pour un cercle parfait */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+
+
+/* --- Le cercle de l'icône change de couleur au survol de la carte --- */
+.valeur-card:hover .valeur-icon-wrapper {
+    background-color: var(--color-accent); /* Le cercle devient jaune (couleur accent) */
+}
+
+.valeur-card h3 {
+    font-size: 1.5rem;
+    color: var(--color-secondary); /* Titre de la carte en vert foncé */
+    margin-bottom: 0.75rem;
+}
+
+.valeur-card p {
+    color: var(--color-text-light);
+    line-height: 1.6; /* Hauteur de ligne pour une lecture confortable */
+}
+
+/* --- Style de l'icône Font Awesome à l'intérieur du cercle --- */
+.valeur-icon-wrapper i {
+    font-size: 30px; /* Taille de l'icône */
+    color: var(--color-primary); /* Couleur de l'icône (vert principal) */
+    transition: color 0.3s ease; /* Ajoute une transition sur la couleur */
+}
+
+/* --- Le cercle ET l'icône changent de couleur au survol de la carte --- */
+.valeur-card:hover .valeur-icon-wrapper {
+    background-color: var(--color-accent); /* Le cercle devient jaune (couleur accent) */
+}
+
+.valeur-card:hover .valeur-icon-wrapper i {
+    color: var(--color-white); /* L'icône devient blanche pour un contraste parfait sur le fond jaune */
+}
+
+
+/* ======================= ADAPTATION POUR MOBILES (Responsive) ======================= */
+
+/* --- Pour les tablettes et plus petits écrans --- */
+@media (max-width: 992px) {
+    .valeurs-grid {
+        /* On passe à 2 colonnes sur tablette pour plus d'espace */
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* --- Pour les téléphones mobiles --- */
+@media (max-width: 768px) {
+    .section-title h2 {
+        font-size: 2rem; /* Taille du titre principal réduite */
+    }
+    
+    .valeurs-grid {
+        /* Sur mobile, on affiche une seule colonne */
+        grid-template-columns: 1fr;
+    }
+
+    .valeur-card {
+        /* On réduit légèrement l'espace sur mobile */
+        padding: 2rem 1.5rem;
+    }
+}
+
+
+/* ======================= STYLE DE LA SECTION CTA ======================= */
+
+/* --- Conteneur principal de la section --- */
+.cta-section {
+    background-color: #ffffff;
+    padding: 5rem 2.5rem; /* Espace intérieur généreux */
+}
+
+.cta-container {
+    display: flex;
+    align-items: center;
+    gap: 4rem; /* Espace important entre les deux colonnes */
+}
+
+/* --- Colonne de gauche : Contenu --- */
+.cta-content {
+    flex: 1; /* Chaque colonne prend 50% de l'espace */
+}
+
+.pre-title {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-primary); /* Vert principal */
+    letter-spacing: 1px; /* Espace entre les lettres */
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.cta-content h2 {
+    font-size: 2.5rem;
+    color: var(--color-secondary); /* Vert très foncé */
+    margin-bottom: 1.5rem;
+}
+
+.cta-content p {
+    color: var(--color-text-light);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+/* --- Liste des points forts --- */
+.cta-highlights {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 2.5rem;
+}
+
+.cta-highlights li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    color: var(--color-text-light); /* Couleur du texte des points forts */
+}
+
+.cta-highlights i {
+    color: var(--color-primary); /* Couleur de l'icône check */
+    background-color: #E6F3EC; /* Fond de cercle vert très clair */
+    border-radius: 50%;
+    padding: 5px;
+    margin-right: 1rem;
+    font-size: 0.8rem;
+}
+
+/* --- Bouton style secondaire --- */
+.btn.btn-secondary {
+    background-color: var(--color-accent);
+    color: var(--color-secondary); /* Texte en vert foncé */
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+.btn.btn-secondary:hover {
+    background-color: var(--color-secondary); /* Jaune un peu plus foncé au survol */
+    color: var(--color-white); /* Texte blanc au survol */
+}
+
+/* --- Colonne de droite : Image --- */
+.cta-image-wrapper {
+    flex: 1;
+    position: relative; /* Indispensable pour positionner les badges */
+}
+
+.cta-image-wrapper img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    display: block;
+}
+
+/* --- Style des badges sur l'image --- */
+.image-badge {
+    position: absolute; /* Positionnement par-dessus l'image */
+    background-color: var(--color-secondary); /* Fond vert foncé semi-transparent */
+    color: var(--color-white); /* Texte blanc pour le contraste */
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    backdrop-filter: blur(5px); /* Effet "verre dépoli" pour un look moderne */
+}
+
+.main-badge {
+    top: -20px; /* Le fait sortir en haut à gauche */
+    left: -20px;
+    background-color: var(--color-accent); /* Fond jaune pour le badge principal */
+    color: var(--color-secondary);
+    padding: 1rem 1.5rem;
+    font-size: 1.5rem;
+}
+
+.main-badge strong {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.small-badge {
+    bottom: 20px; /* En bas à droite */
+    right: -15px;
+}
+
+
+/* ======================= ADAPTATION POUR MOBILES (Responsive) ======================= */
+@media (max-width: 992px) {
+    .cta-container {
+        flex-direction: column; /* On empile les colonnes */
+        gap: 3rem;
+    }
+
+    .cta-content {
+        /* L'image viendra en premier sur mobile pour un meilleur impact visuel */
+        order: 2; 
+        text-align: center;
+    }
+
+    .cta-image-wrapper {
+        order: 1;
+        width: 100%; /* L'image prend toute la largeur */
+    }
+
+    .cta-highlights {
+        text-align: left; /* On garde le texte de la liste aligné à gauche */
+    }
+
+    .main-badge {
+        font-size: 1.2rem;
+        padding: 0.8rem 1.2rem;
+    }
+}
+
+/* ======================= STYLE DU FOOTER ======================= */
+
+/* --- Partie principale (foncée) --- */
+.footer-main {
+    background-color: var(--color-secondary); /* Vert très foncé */
+    color: #e0e0e0; /* Texte gris clair pour la lisibilité */
+    padding: 4rem 2.5rem; /* Espace intérieur généreux */
+}
+
+.footer-grid {
+    display: grid;
+    /* CHANGEMENT PRINCIPAL : Grille à 3 colonnes. La 1ère est plus large. */
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 3rem; /* Espace entre les colonnes */
+}
+
+/* --- Style du logo dans le footer --- */
+.footer-logo {
+    max-width: 160px; /* Taille maximale pour le logo */
+    margin-bottom: 1rem; /* Espace sous le logo */
+}
+
+.footer-col h4 {
+    color: var(--color-white); /* Titres en blanc pur */
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.footer-col p {
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+/* --- Style des listes et liens --- */
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-col li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-col a {
+    color: #e0e0e0;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.footer-col a:hover {
+    color: var(--color-accent
+    ); /* Le lien devient jaune au survol */
+    padding-left: 5px; /* Petit décalage vers la droite */
+}
+
+.footer-col .social-icons a:hover {
+    padding-left: 0; /* On annule le décalage pour les icônes sociales */
+}
+
+/* --- Icônes (contact et réseaux sociaux) --- */
+.footer-col p i {
+    margin-right: 10px;
+    color: var(--color-accent); /* Icônes en jaune */
+    width: 20px; /* Assure un alignement parfait */
+    text-align: center;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.social-icons a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: var(--color-white);
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icons a:hover {
+    background-color: #FEBA00;
+    color: #035E42;
+    transform: translateY(-3px);
+}
+
+/* --- Sous-pied de page (bande jaune) --- */
+.footer-sub {
+    background-color: #FEBA00;
+    color: #035E42;
+    padding: 1rem 2.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.footer-sub .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-sub a {
+    color: #035E42;
+    font-weight: 500;
+}
+.footer-sub a:hover {
+    text-decoration: underline;
+}
+
+/* ======================= RESPONSIVE POUR FOOTER ======================= */
+
+@media (max-width: 992px) {
+    .footer-grid {
+        /* La grille à 3 colonnes reste acceptable sur tablette,
+           mais on peut passer à 2 si on le souhaite :*/
+           grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        /* 1 seule colonne sur mobile */
+        grid-template-columns: 1fr;
+        text-align: center; /* On centre le texte pour un meilleur look */
+    }
+    
+    .social-icons {
+        justify-content: center; /* Centre les icônes sociales */
+    }
+
+    .footer-sub .container {
+        flex-direction: column; /* On empile le copyright et les liens */
+        gap: 0.5rem;
+    }
+}
+
+/* ======================= STYLE DE LA SECTION HÉROS - À PROPOS ======================= */
+
+.about-hero-section {
+    background-color: var(--color-white); /* ou var(--color-light-gray) si vous préférez */
+    padding: 5rem 0;
+    overflow: hidden;
+}
+
+.about-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Deux colonnes de taille égale */
+    align-items: center;
+    gap: 4rem;
+}
+
+/* Le contenu textuel réutilise en grande partie les styles généraux.
+   On ajoute juste le style pour la liste de points forts. */
+.highlights-list {
+    padding-left: 0;
+    margin: 2rem 0;
+}
+
+.highlights-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    color: var(--color-text-light);
+}
+
+.highlights-list i {
+    color: var(--color-primary); /* Icône en vert principal */
+    background-color: #E6F3EC;
+    border-radius: 50%;
+    padding: 5px;
+    margin-right: 1rem;
+    font-size: 0.8rem;
+}
+
+/* --- Style de la composition d'images (partie droite) --- */
+.about-hero-images {
+    position: relative; /* Conteneur de référence pour les éléments superposés */
+    min-height: 500px; /* Donne de la hauteur au conteneur */
+}
+
+.about-hero-images .image-back,
+.about-hero-images .image-front,
+.about-hero-images .experience-badge {
+    position: absolute; /* Permet la superposition */
+    border-radius: 12px;
+}
+
+.about-hero-images .image-back {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.about-hero-images .image-front {
+    width: 65%;
+    height: 65%;
+    object-fit: cover;
+    bottom: 0;
+    right: 0;
+    border: 5px solid var(--color-white);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.experience-badge {
+    background-color: var(--color-primary); /* Fond en vert principal */
+    color: var(--color-white);
+    padding: 1rem;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-85%, -85%); /* Centre parfaitement le badge */
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.experience-badge .year-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: var(--font-headings);
+    line-height: 1;
+    display: block;
+}
+
+
+/* ======================= STYLE DE LA SECTION HÉROS - À PROPOS ======================= */
+
+.about-hero-section {
+    background-color: var(--color-white); /* ou var(--color-light-gray) si vous préférez */
+    padding: 5rem 0;
+    overflow: hidden;
+}
+
+.about-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Deux colonnes de taille égale */
+    align-items: center;
+    gap: 4rem;
+}
+
+/* Le contenu textuel réutilise en grande partie les styles généraux.
+   On ajoute juste le style pour la liste de points forts. */
+.highlights-list {
+    padding-left: 0;
+    margin: 2rem 0;
+}
+
+.highlights-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    color: var(--color-text-light);
+}
+
+.highlights-list i {
+    color: var(--color-primary); /* Icône en vert principal */
+    background-color: #E6F3EC;
+    border-radius: 50%;
+    padding: 5px;
+    margin-right: 1rem;
+    font-size: 0.8rem;
+}
+
+/* --- Style de la composition d'images (partie droite) --- */
+.about-hero-images {
+    position: relative; /* Conteneur de référence pour les éléments superposés */
+    min-height: 500px; /* Donne de la hauteur au conteneur */
+}
+
+.about-hero-images .image-back,
+.about-hero-images .image-front,
+.about-hero-images .experience-badge {
+    position: absolute; /* Permet la superposition */
+    border-radius: 12px;
+}
+
+.about-hero-images .image-back {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.about-hero-images .image-front {
+    width: 65%;
+    height: 65%;
+    object-fit: cover;
+    bottom: 0;
+    right: 0;
+    border: 5px solid var(--color-white);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.experience-badge {
+    background-color: var(--color-primary); /* Fond en vert principal */
+    color: var(--color-white);
+    padding: 1rem;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-85%, -85%); /* Centre parfaitement le badge */
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.experience-badge .year-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: var(--font-headings);
+    line-height: 1;
+    display: block;
+}
+
+
+/* ======================= STYLE DE LA SECTION HÉROS - À PROPOS ======================= */
+
+.about-hero-section {
+    background-color: var(--color-white); /* ou var(--color-light-gray) si vous préférez */
+    padding: 5rem 0;
+    overflow: hidden;
+}
+
+.about-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Deux colonnes de taille égale */
+    align-items: center;
+    gap: 4rem;
+}
+
+/* Le contenu textuel réutilise en grande partie les styles généraux.
+   On ajoute juste le style pour la liste de points forts. */
+.highlights-list {
+    padding-left: 0;
+    margin: 2rem 0;
+}
+
+.highlights-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    color: var(--color-text-light);
+}
+
+.highlights-list i {
+    color: var(--color-primary); /* Icône en vert principal */
+    background-color: #E6F3EC;
+    border-radius: 50%;
+    padding: 5px;
+    margin-right: 1rem;
+    font-size: 0.8rem;
+}
+
+/* --- Style de la composition d'images (partie droite) --- */
+.about-hero-images {
+    position: relative; /* Conteneur de référence pour les éléments superposés */
+    min-height: 500px; /* Donne de la hauteur au conteneur */
+}
+
+.about-hero-images .image-back,
+.about-hero-images .image-front,
+.about-hero-images .experience-badge {
+    position: absolute; /* Permet la superposition */
+    border-radius: 12px;
+}
+
+.about-hero-images .image-back {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.about-hero-images .image-front {
+    width: 65%;
+    height: 65%;
+    object-fit: cover;
+    bottom: 0;
+    right: 0;
+    border: 5px solid var(--color-white);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.experience-badge {
+    background-color: var(--color-primary); /* Fond en vert principal */
+    color: var(--color-white);
+    padding: 1rem;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-85%, -85%); /* Centre parfaitement le badge */
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.experience-badge .year-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: var(--font-headings);
+    line-height: 1;
+    display: block;
+}
+
+/* ======================= STYLE DE LA SECTION HÉROS - À PROPOS ======================= */
+
+.about-hero-section {
+    background-color: var(--color-white); /* ou var(--color-light-gray) si vous préférez */
+    padding: 5rem 0;
+    overflow: hidden;
+}
+
+.about-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Deux colonnes de taille égale */
+    align-items: center;
+    gap: 4rem;
+}
+
+/* Le contenu textuel réutilise en grande partie les styles généraux.
+   On ajoute juste le style pour la liste de points forts. */
+.highlights-list {
+    padding-left: 0;
+    margin: 2rem 0;
+}
+
+.highlights-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    color: var(--color-text-light);
+}
+
+.highlights-list i {
+    color: var(--color-primary); /* Icône en vert principal */
+    background-color: #E6F3EC;
+    border-radius: 50%;
+    padding: 5px;
+    margin-right: 1rem;
+    font-size: 0.8rem;
+}
+
+/* --- Style de la composition d'images (partie droite) --- */
+.about-hero-images {
+    position: relative; /* Conteneur de référence pour les éléments superposés */
+    min-height: 500px; /* Donne de la hauteur au conteneur */
+}
+
+.about-hero-images .image-back,
+.about-hero-images .image-front,
+.about-hero-images .experience-badge {
+    position: absolute; /* Permet la superposition */
+    border-radius: 12px;
+}
+
+.about-hero-images .image-back {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.about-hero-images .image-front {
+    width: 65%;
+    height: 65%;
+    object-fit: cover;
+    bottom: 0;
+    right: 0;
+    border: 5px solid var(--color-white);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+.experience-badge {
+    background-color: var(--color-primary); /* Fond en vert principal */
+    color: var(--color-white);
+    padding: 1rem;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-85%, -85%); /* Centre parfaitement le badge */
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.experience-badge .year-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: var(--font-headings);
+    line-height: 1;
+    display: block;
+}
+
+
+/* ======================= RESPONSIVE POUR LA SECTION ======================= */
+@media (max-width: 992px) {
+    .about-hero-grid {
+        grid-template-columns: 1fr; /* On passe à 1 colonne */
+        gap: 3rem;
+    }
+
+    .about-hero-content {
+        text-align: center;
+    }
+
+    .highlights-list {
+        display: inline-block; /* Pour centrer la liste */
+        text-align: left;
+    }
+
+    .about-hero-images {
+        /* On donne une taille fixe au conteneur sur mobile pour éviter qu'il s'effondre */
+        min-height: 400px;
+        margin-top: 2rem;
+    }
+
+    .experience-badge {
+        width: 80px;
+        height: 80px;
+        padding: 1rem;
+    }
+
+    .experience-badge .year-number{
+        font-size: 3rem;
+    }
+}
+
+
+
+/* ======================= STYLE DE LA SECTION MISSION ======================= */
+
+.mission-section {
+    padding: 5rem 0;
+    background-color: var(--color-white);
+}
+
+.mission-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 4rem;
+}
+
+/* --- Colonne de gauche : Image et forme --- */
+.mission-image-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+}
+
+/* La forme organique "blob" en fond */
+.image-blob-shape {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    background-color: #E6F3EC; /* Vert très clair en fond */
+    /* La magie du "blob" : des arrondis de coins irréguliers */
+    border-radius: 65% 35% 55% 45% / 45% 55% 45% 55%;
+    transition: border-radius 0.5s ease;
+}
+
+/* Animation subtile de la forme au survol */
+.mission-image-wrapper:hover .image-blob-shape {
+    border-radius: 45% 55% 65% 35% / 55% 45% 55% 45%;
+}
+
+.mission-image-wrapper img {
+    width: 85%;
+    height: auto;
+    border-radius: 102px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    position: relative; /* Pour être au-dessus du blob */
+    z-index: 2;
+}
+
+.mission-badge {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--color-primary); /* Vert principal */
+    color: var(--color-white);
+    padding: 1rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 500;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.mission-badge i {
+    font-size: 1.2rem;
+}
+
+/* --- Colonne de droite : Contenu --- */
+.mission-content h2 {
+    font-size: 2.5rem; /* Réutilise les styles généraux */
+    margin-bottom: 1.5rem;
+}
+
+blockquote {
+    font-family: var(--font-headings);
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--color-text-light);
+    margin: 2rem 0;
+    padding-left: 1.5rem;
+    border-left: 4px solid var(--color-accent); /* Ligne jaune à gauche */
+}
+
+/* ======================= RESPONSIVE POUR MISSION ======================= */
+@media (max-width: 992px) {
+    .mission-grid {
+        grid-template-columns: 1fr; /* On passe à 1 colonne */
+        gap: 2rem;
+    }
+
+    .mission-content {
+        order: 1; /* Le texte vient en premier */
+        text-align: center;
+    }
+
+    .mission-image-wrapper {
+        order: 2; /* L'image vient en second */
+        min-height: 400px;
+        margin-top: 2rem;
+    }
+
+    blockquote {
+        margin: 2rem auto;
+        max-width: 80%;
+    }
+}
+
+/* ======================= STYLE DE LA SECTION STATS ======================= */
+
+.stats-section {
+    background-color: var(--color-secondary); /* Fond vert très foncé */
+    color: var(--color-white);
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.stats-grid {
+    display: grid;
+    /* 4 colonnes de taille égale sur grand écran */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+.stat-item {
+    padding: 1rem;
+}
+
+.stat-item i {
+    font-size: 3rem; /* Grande taille pour les icônes */
+    color: var(--color-accent); /* Icônes en couleur accent (jaune) */
+    margin-bottom: 1rem;
+}
+
+.stat-number {
+    font-family: var(--font-headings);
+    font-size: 3.5rem; /* Très grande taille pour les chiffres */
+    font-weight: 700;
+    line-height: 1;
+}
+
+.stat-description {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8); /* Texte blanc légèrement transparent */
+}
+
+/* ======================= RESPONSIVE POUR STATS ======================= */
+@media (max-width: 992px) {
+    .stats-grid {
+        /* On passe à 2 colonnes sur tablette */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .stats-grid {
+        /* 1 seule colonne sur mobile */
+        grid-template-columns: 1fr;
+    }
+}
+    
+
+/* ========================================== NOS PRODUITS================================= */
+
+/* ==================================================================== */
+/* ======================= STYLE PAGEPRODUITS ======================= */
+/* ==================================================================== */
+
+/* ======================= STYLE SECTION HÉROS - PRODUITS ======================= */
+
+.product-hero-section {
+    padding: 5rem;
+    background-color: #e3f3e3; /* Fond très clair */
+    overflow: hidden; /* Empêche les formes de déborder */
+}
+
+.product-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 4rem;
+}
+
+/* --- Colonne de gauche : Image et forme --- */
+.product-hero-image-wrapper {
+    position: relative; /* Conteneur de référence pour la superposition */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.background-shape {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-primary); /* Vert principal */
+    /* Forme organique douce */
+    border-radius: 45% 55% 65% 35% / 55% 45% 55% 45%;
+    opacity: 0.1; /* Très transparent pour un effet subtil */
+    transform: scale(1.2); /* La forme est un peu plus grande que l'image */
+}
+
+.product-hero-image-wrapper img {
+    width: 80%;
+    position: relative; /* Pour être au-dessus de la forme */
+    z-index: 2;
+}
+
+/* --- Colonne de droite : Contenu --- */
+.product-hero-content h2 {
+    font-size: 3rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.product-hero-content p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    color: var(--color-text-light);
+}
+
+.btn-primary {
+    background-color: var(--color-secondary); /* vert */
+    color: var(--color-white);
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}   
+
+.product-hero-content .btn-primary:hover {
+    background-color: var(--color-primary); /* Jaune */
+    color: var(--color-white);
+    transform: translateY(-5px); /* Légère élévation au survol */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Ombre portée pour l'effet de profondeur */
+}
+
+/* ======================= RESPONSIVE POUR HÉROS - PRODUITS ======================= */
+@media (max-width: 992px) {
+    .product-hero-grid {
+        grid-template-columns: 1fr; /* On passe à 1 colonne */
+        text-align: center;
+    }
+
+    .product-hero-image-wrapper {
+        margin-bottom: 3rem;
+    }
+
+    .product-hero-content .pre-title {
+        /* Centre le pré-titre quand le texte est centré */
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .product-hero-content h2 {
+        font-size: 2.5rem; /* On réduit un peu le titre sur mobile */
+    }
+}
+
+/* ======================= STYLE DE LA SECTION PRODUITS ======================= */
+
+.products-section {
+    padding: 5rem 0;
+    background-color: var(--color-light-gray);
+}
+
+/* --- Style des filtres --- */
+.product-filters {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap; /* Permet aux boutons de passer à la ligne sur mobile */
+}
+
+.btn-filter {
+    background-color: var(--color-white);
+    color: var(--color-text-light);
+    border: 1px solid var(--color-border);
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-filter:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+}
+
+/* Style du bouton de filtre actif */
+.btn-filter.active {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    border-color: var(--color-secondary);
+}
+
+/* --- Grille des produits --- */
+.produits-grid {
+    display: grid;
+    /* Grille responsive : s'adapte automatiquement au nombre de colonnes */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* --- Style de chaque carte produit --- */
+.produit-carte {
+    background-color: var(--color-white);
+    border-radius: 12px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05);
+    overflow: hidden; /* Important pour l'effet de zoom de l'image */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.produit-carte:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.card-image {
+    height: 220px;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Assure que l'image remplit l'espace sans se déformer */
+    transition: transform 0.4s ease;
+}
+
+.produit-carte:hover .card-image img {
+    transform: scale(1.1); /* Effet de zoom au survol */
+}
+
+.card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Permet au contenu de pousser le bouton vers le bas */
+}
+
+.card-category {
+    display: inline-block;
+    align-self: flex-start; /* Aligne le tag à gauche */
+    background-color: #E6F3EC; /* Fond vert très clair */
+    color: var(--color-primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.card-content h3 {
+    font-size: 1.4rem;
+    color: var(--color-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.card-description {
+    color: var(--color-text-light);
+    line-height: 1.6;
+    flex-grow: 1; /* Pousse le bouton vers le bas */
+    margin-bottom: 1.5rem;
+}
+
+.card-cta {
+    display: block;
+    text-align: center;
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    border: 2px solid var(--color-border);
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.card-cta:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+}
+
+/* --- Style de la carte produit (rappel) --- */
+.produit-carte {
+    /* ... vos styles existants (background, border-radius, etc.) ... */
+    
+    /* LIGNE À AJOUTER : Définit la transition pour l'animation */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.4s ease, height 0.4s ease;
+}
+
+/* --- Classe pour cacher les cartes avec une animation --- */
+.produit-carte.hidden {
+    opacity: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    /* On retire la bordure et l'ombre pour une disparition propre */
+    border: none; 
+    box-shadow: none;
+}
+
+
+
+
+
+/* ======================== FORMULAIRE DE CONTACT STYLE ================================================ */
+
+.form-main{
+    background-color: var(--color-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    perspective: 1000px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.form-container{
+    position: relative;
+    display: flex;
+    width: 70%;
+    height: 500px;
+    transition: 0.5s;
+    transform-style: preserve-3d;
+    margin-bottom: 60px;
+    animation: anime  2s ease-out;
+    
+
+}
+
+
+/* section animation 2 */
+@keyframes anime {
+    from{
+        transform: rotateX(90deg);
+    }
+}
+
+
+.image{ 
+    background-image: url("https://via.placeholder.com/600x400");
+
+    background-image: url("/image/picture.jpeg");
+    height: 150%;
+    width: 55%;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    background-position:  center;
+    background-size: cover;
+    transform: translateY(60px) skewY(2deg);
+    border-radius: 20px;
+    margin-bottom: 25px;
+}
+
+
+
+form{
+    width: 50%;
+    background-color: var(--color-white);
+    border-radius: 20px;
+    transform: skewY(2deg) translateX(-20px);
+    z-index: 1000;
+    padding: 20px;
+     background-color: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+form h2 {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 30px;
+    margin-bottom: 5px;
+
+}
+span{
+    color: var(--color-accent);
+}
+
+label{
+    font-size: 14px;
+    font-weight: 400;
+    margin: 5px 0;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    
+
+}  
+
+input, textarea{
+    padding: 5px;
+    resize: none;
+    outline: 0;
+    border: 1px solid #999;
+    border-radius: 4px;
+   
+}
+
+input:focus, textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 5px var(--color-primary);
+}
+
+
+
+.buton{
+    background: linear-gradient(90deg, #2e7d32, #43a047);
+  color: white;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border-radius: 30px;
+  transition: all 0.3s ease-in-out;
+  padding: 8px;
+  margin-top:10px ;
+}
+
+.buton:hover{
+    transform: scale(1.02);
+     background-color: #388e3c;
+    color: #fff;
+    background:var(--color-accent);
+  transform: scale(1.05);
+}
+.request-message{
+    position: absolute;
+    top: 0;
+    background-color: white;
+    text-transform: capitalize;
+    font-size: 14px;
+    width: 55%;
+    padding: 15px;
+    transform: skewY(2deg);
+    border-radius: 20px;
+    color: red;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.information{
+    position: absolute;
+    bottom: -57px;
+    right: 25px;
+    z-index: -20;
+    background-color: white;
+    text-transform: capitalize;
+    font-size: 14px;
+    width: 46%;
+    padding: 15px;
+    border-radius: 20px;
+    text-align: right;
+    transform: skewY(2deg);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+
+
+}
+
+@media(max-width:762px){
+    .form-main{
+        height: auto;
+        width: 350px;
+        margin-bottom: 10px;
+    }
+
+    .request-message , .information{
+        width: 350px;
+        text-align: center; 
+    }
+    .image{
+        display: none;
+    }
+    form{
+        width: 100%;
+        transform: skewY(2deg) translateY(0);
+    }
+    .request-message{
+        left: 0;
+        top: -40px;
+    }
+    .information{
+        bottom: -40px;
+        left: 0 ;
+    }
+
+}
+
+
+
+
+/* =========================== STYLE SECTION NOS PRODUITS =========================== */
+
+/* ================================================================================== */
+
+.nos-produits {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: auto;
+  text-align: center;
+}
+
+.nos-produits h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: var(--color-secondary);
+}
+
+.nos-produits p {
+  max-width: 800px;
+  margin: auto auto 30px auto;
+  font-size: 1rem;
+  color: #333;
+}
+
+.filtre-btns {
+  margin-bottom: 30px;
+}
+
+.filtre-btns button {
+  margin: 0 8px;
+  padding: 10px 15px;
+  border: none;
+  background-color: #2f8f46;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.filtre-btns button:hover {
+  background-color: var(--color-primary);
+}
+
+.produits-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+/* Cartes produits */
+.product-card {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: scale(1.03);
+}
+
+.product-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.product-card h3 {
+  margin: 10px 0 5px;
+  font-size: 1.1rem;
+  color: var(--color-secondary);
+}
+
+.product-card p {
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+      .produits-container {
+    grid-template-columns: 1fr;
+  }
+
+  .product-card img {
+    height: 160px;
+  }
+
+  .filter-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .filter-buttons button {
+    width: 100%;
+    max-width: 300px;
+    margin: 55px;
+  }
+
+}
+
