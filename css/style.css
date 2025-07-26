@@ -99,8 +99,8 @@ img{
     
 }
 .header-container{
-    max-width: 1200px;/* largeur maximal  pour le conteneur du header
-    margin: 0 auto; /*centre le conteneur*/
+    max-width: 1200px;/* largeur maximal  pour le conteneur du header*/
+    margin: 0;
     display: flex;
     padding: 0 2rem ;
     justify-content: space-between;
@@ -1402,10 +1402,6 @@ blockquote {
         grid-template-columns: 1fr;
     }
 }
-    
-
-/* ========================================== NOS PRODUITS================================= */
-
 /* ==================================================================== */
 /* ======================= STYLE PAGEPRODUITS ======================= */
 /* ==================================================================== */
@@ -1652,6 +1648,7 @@ blockquote {
     border: none; 
     box-shadow: none;
 }
+
 
 
 
